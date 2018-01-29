@@ -1,0 +1,16 @@
+{
+	"TimeInterval": "5",
+	"Period": "300",
+	"Statistics": ["Average", "Minimum", "Maximum", "SampleCount", "Sum"],
+	"Configurations": [{
+		"Namespace": "AWS/Lambda",
+        "MetricName": 4,
+		"Dimensions": [{
+			"Name": "FunctionName",
+			"Value": "dummy_function"
+		}, {
+			"Name": "Resource",
+			"Value": "dummy_function"
+		}]
+	}]
+}
