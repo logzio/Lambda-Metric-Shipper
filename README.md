@@ -1,17 +1,17 @@
 # CloudWatch Metrics Shipper - Monitoring Lambda
 
-This is an AWS Lambda function that scheduled to collect CloudWatch metrics and send them to Logz.io in bulk, over HTTP, .
+This is an AWS Lambda function that scheduled to collect CloudWatch metrics and send them to Logz.io in bulk, over HTTP.
 
 ## Step 1 - Creating the Lambda Function
 
 1. Sign in to your AWS account and open the AWS Lambda console.
 2. Click **Create function**, to create a new Lambda function.
 3. Select Author from scratch, and enter the following information:
-  - Name -  Enter a name for your new Lambda function. We suggest adding the log type to the name.
-  - Runtime - From the drop-down menu, select Python 2.7 as the function’s runtime.
-  - Role - Make sure to add the following policy to your Lambda role:
-  
-  
+  - Name: Enter a name for your new Lambda function. We suggest adding the log type to the name.
+  - Runtime: From the drop-down menu, select Python 2.7 as the function’s runtime.
+  - Role: Make sure to add the following policy to your Lambda role:
+
+ ```   
     {
         "Version": "2012-10-17",
         "Statement": [
@@ -27,6 +27,7 @@ This is an AWS Lambda function that scheduled to collect CloudWatch metrics and 
             }
         ]
     }   
+```
 
 4. Hit the **Create Function** button in the bottom-right corner of the page.
 
@@ -43,6 +44,7 @@ This is an AWS Lambda function that scheduled to collect CloudWatch metrics and 
 5. Leave the other settings as default
 6. Create a configuration JSON file. To make it easier to understand how to configure the JSON configuration file for our Lambda, we decided to comply with the “list_metrics” function from boto3 documentation, in addition to a few more parameters we allow to configure.
 
+```
 
     {
         "TimeInterval": int,
@@ -59,6 +61,7 @@ This is an AWS Lambda function that scheduled to collect CloudWatch metrics and 
 	    }]
 
     }
+```
 
 Parameters:
 - TimeInterval **[REQUIRED]** - The time period to monitor, in minutes, before the Lambda was invoked. Set to the same value as the schedule event time interval.
