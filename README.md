@@ -1,6 +1,7 @@
-# CloudWatch Metrics Shipper - Monitoring Lambda
+# CloudWatch Metrics Shipper
 
 This is an AWS Lambda function that scheduled to collect CloudWatch metrics and send them to Logz.io in bulk, over HTTP.
+The example below shows how to monitor Lambda metrics. You can of course monitor additional AWS services.
 
 ## Step 1 - Creating the Lambda Function
 
