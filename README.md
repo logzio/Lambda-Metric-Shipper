@@ -5,9 +5,10 @@ The example below shows how to monitor Lambda metrics. You can of course monitor
 
 ## Step 1 - Creating the Lambda Function
 
-1. Sign in to your AWS account and open the AWS Lambda console.
-2. Click **Create function**, to create a new Lambda function.
-3. Select Author from scratch, and enter the following information:
+1. Zip 'lambda_function.py' and 'shipper.py': zip logzio-metrics-shipper lambda_function.py shipper.py
+2. In the Function Code section, open the Code entry type menu, and select *Upload a .ZIP file*.
+3. Select the zip you created at 1.
+4. Select Author from scratch, and enter the following information:
   - Name: Enter a name for your new Lambda function. We suggest adding the log type to the name.
   - Runtime: From the drop-down menu, select Python 2.7 as the function’s runtime.
   - Role: Make sure to add the following policy to your Lambda role:
@@ -30,7 +31,7 @@ The example below shows how to monitor Lambda metrics. You can of course monitor
     }   
 ```
 
-4. Hit the **Create Function** button in the bottom-right corner of the page.
+5. Hit the **Create Function** button in the bottom-right corner of the page.
 
 ## Step 2 - Uploading and configuring the Logz.io Lambda shipper
 
