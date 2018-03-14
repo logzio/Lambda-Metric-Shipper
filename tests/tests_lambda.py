@@ -3,11 +3,12 @@ import os
 import unittest
 
 from logging.config import fileConfig
-from src.lambda_function import validateConfigurations as validate
+from src.lambda_function import validate_configurations as validate
 
 # create logger assuming running from ./run script
 fileConfig('tests/logging_config.ini')
 logger = logging.getLogger(__name__)
+
 
 class TestLambdaFunction(unittest.TestCase):
     """ Unit testing logzio lambda function """
@@ -43,7 +44,6 @@ class TestLambdaFunction(unittest.TestCase):
             validate()
         logger.info("Catched the correct exception, no 'FILEPATH'")
 
-
     def test_wrong_variable_format(self):
         logger.info("TEST: test_wrong_variable_format")
 
@@ -67,6 +67,7 @@ class TestLambdaFunction(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             validate()
         logger.info("Catched the correct exception, can't have both Statistics and ExtendedStatistics")
+
 
 if __name__ == '__main__':
     unittest.main()
