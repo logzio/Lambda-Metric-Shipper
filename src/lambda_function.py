@@ -166,7 +166,7 @@ def validate_configurations():
                     try:
                         metric_name = conf["MetricName"]
                         if not isinstance(metric_name, str):
-                            logger.error("Error in your configuration file: Period should be int(sec)")
+                            logger.error("Error in your configuration file: MetricName must be str")
                             raise RuntimeError
                     except KeyError:
                         # no MetricName is fine
