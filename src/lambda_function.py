@@ -10,6 +10,8 @@ from shipper import LogzioShipper
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+AVAILABLE_STATISTICS = ['Average', 'Minimum', 'Maximum', 'SampleCount', 'Sum']
+
 
 # Set statistics parameters
 def _set_metric_stats(metric, requests_meta_data):
@@ -28,21 +30,34 @@ def _set_metric_stats(metric, requests_meta_data):
     elif ('ExtendedStatistics' in requests_meta_data) and (requests_meta_data['ExtendedStatistics']):
         stats['ExtendedStatistics'] = requests_meta_data['ExtendedStatistics']
     else:
-        stats['Statistics'] = ['Average', 'Minimum', 'Maximum', 'SampleCount', 'Sum']
+        stats['Statistics'] = [statistic for statistic in AVAILABLE_STATISTICS]
 
     return stats
 
 
 # Enrich data point
 def _enrich_data_point(data_point, metric):
-    # type: (dict, dict) -> None
+    # type: (dict, dict) -> dict
     timestamp = data_point.pop('Timestamp')
     ts = timestamp.isoformat()
-    data_point.update({"metric": metric['MetricName'], "@timestamp": ts, "Namespace": metric["Namespace"]})
-    for dim in metric['Dimensions']:
-        key = dim['Name']
-        value = dim['Value']
-        data_point[key] = value
+    metric_name = metric['MetricName']
+    metrics = {metric_name: {}}
+    dimensions = {}
+
+    for key, value in data_point.items():
+        if key in AVAILABLE_STATISTICS:
+            metrics[metric_name][key] = value
+        else:
+            dimensions[key] = value
+
+    dimensions["namespace"] = metric["Namespace"]
+    dimensions["metricName"] = metric_name
+
+    return {
+        "@timestamp": ts,
+        "metric": metrics,
+        "dim": dimensions
+    }
 
 
 # Going over all requests configurations to get statistics
@@ -54,8 +69,8 @@ def _get_metric_statistics(cloudwatch, stats_request_configurations_list, logzio
             response = cloudwatch.get_metric_statistics(**metric)
             if response["Datapoints"]:
                 for dp in response["Datapoints"]:
-                    _enrich_data_point(dp, metric)
-                    shipper.add(dp)
+                    shipper.add(_enrich_data_point(dp, metric))
+
         except Exception as e:
             logger.error("Exception from getMetricStatistics: {}".format(e))
             raise
