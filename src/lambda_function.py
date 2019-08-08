@@ -114,6 +114,15 @@ def _get_times(event_time, time_interval):
     return {"startTime": start_time, "endTime": end_time}
 
 
+def str_hook(obj):
+    return {
+        k.encode('utf-8') if isinstance(k, unicode) else k:
+            v.encode('utf-8') if isinstance(v, unicode) else v
+        for k, v in obj
+
+    }
+
+
 def validate_configurations():
     # type: (None) -> None
     if ("FILEPATH" not in os.environ) or ("TOKEN" not in os.environ) or ("URL" not in os.environ):
@@ -124,7 +133,7 @@ def validate_configurations():
     try:
         with open(configuration_fp, 'r') as f:
             try:
-                jfile = json.load(f)
+                jfile = json.load(f, object_pairs_hook=str_hook)
                 time_interval = jfile['TimeInterval']
                 period = jfile['Period']
                 configurations = jfile['Configurations']
