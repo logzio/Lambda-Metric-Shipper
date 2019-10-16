@@ -52,7 +52,7 @@ The example below shows how to monitor Lambda metrics. You can of course monitor
         "TimeInterval": int,
 	    "Period": int,
 	    "Statistics": ["Average", "Minimum", "Maximum", "SampleCount", "Sum"],
-		   "ExtendedStatistics": ["string",],
+		   "ExtendedStatistics": ["string"],
 	    "Configurations": [{
 		        "Namespace": "string",
 		        "MetricName": "string",
