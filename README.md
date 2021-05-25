@@ -1,6 +1,6 @@
 # CloudWatch Metrics Shipper
 
-This project is depreacted as we moved to Prometheus as a Service. Pleaes use this[https://github.com/logzio/logzio-aws-metrics] instead
+This project is depreacted as we moved to Prometheus as a Service. Pleaes use [this](https://github.com/logzio/logzio-aws-metrics) instead
 
 
 This is an AWS Lambda function that scheduled to collect CloudWatch metrics and send them to Logz.io in bulk, over HTTP.
